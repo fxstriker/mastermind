@@ -16,7 +16,7 @@ def check_guess(args):
     global won
     global correct
     correct = [0, 0]
-    if args.isdigit and len(args) == len(computer):
+    if args.isdigit() and len(args) == len(computer):
         for i in range(len(args)):
             if str(args[i]) == str(computer[i]):
                 correct[0] += 1
@@ -24,7 +24,7 @@ def check_guess(args):
                 correct[1] += 1
             if correct[0] == len(args):
                 won = True
-        print(str(correct[0]) + " numbers are right and " + str(correct[1]) + " are right but in the wrong spot")
+        print("%d numbers are right and %d are right but in the wrong spot" % (correct[0], correct[1]))
     else:
         print("Invalid input, try again")
         turn_count(-1)
