@@ -1,18 +1,19 @@
 # Based on board game Mastermind https://en.wikipedia.org/wiki/Mastermind_(board_game)
 # Author Nathan
-import random as rand
+import random
 
 
-def gen_computer(arg):
+def gen_computer(difficulty_input):
     temp = []
-    for num in range(arg):
-        temp.append(rand.randint(0, 9))
-    print("A random '" + str(arg) + "' digit number was generated for you to guess")
+    for num in range(difficulty_input):
+        temp.append(random.randint(0, 9))
+    print("A random '%s' digit number was generated for you to guess" % difficulty_input)
     # print("[Debug]" + str(temp))  # Uncomment for debug
     return temp
 
 
 def check_guess(args):
+    global turn
     global won
     global correct
     correct = [0, 0]
@@ -27,21 +28,16 @@ def check_guess(args):
         print("%d numbers are right and %d are right but in the wrong spot" % (correct[0], correct[1]))
     else:
         print("Invalid input, try again")
-        turn_count(-1)
+        turn -= 1
 
 
-def turn_count(arg):
-    global turn
-    turn += arg
-
-
-def won_message(arg):
+def won_message(turn_num):
     print("The correct number was:")
     print(computer)
-    if arg > 1:
-        print("You won in " + str(arg) + " turns!")
-    else:
-        print("You won in " + str(arg) + " turn!")
+    temp = "turn!"
+    if turn_num > 1:
+        temp = "turns!"
+    print("You won in %s %s" % (turn_num, temp))
 
 
 turn = 0
@@ -53,9 +49,8 @@ if difficulty.isdigit():
 else:
     print("Invalid difficulty input defaulting to '4'")
     computer = gen_computer(4)
-
 while won is False:
-    turn_count(1)
-    print("Turn number " + str(turn))
+    turn += 1
+    print("Turn number %s" % turn)
     check_guess(input("Take your guess:"))
 won_message(turn)
